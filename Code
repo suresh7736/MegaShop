@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MegaShop - India's Biggest Online Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background: #F1F3F6;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(to bottom, #2874F0, #1B5FBF);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .promo-banner {
+            background: linear-gradient(90deg, #FFD700, #FFA500, #FF6B35);
+            color: #000;
+            text-align: center;
+            padding: 12px;
+            font-weight: 800;
+            font-size: 15px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.9; }
+        }
+
+        .header-main {
+            display: flex;
+            align-items: center;
+            padding: 12px 30px;
+            gap: 20px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 28px;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .search-box {
+            flex: 1;
+            max-width: 700px;
+            display: flex;
+            background: white;
+            border-radius: 2px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: none;
+            font-size: 14px;
+        }
+
+        .search-btn {
+            background: #FF9800;
+            border: none;
+            padding: 0 20px;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .nav-btns {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background: #F44336;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .category-bar {
+            background: white;
+            padding: 0 30px;
+            display: flex;
+            gap: 0;
+            overflow-x: auto;
+            border-bottom: 1px solid #E0E0E0;
+        }
+
+        .category-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #333;
+            white-space: nowrap;
+            border-bottom: 2px solid transparent;
+        }
+
+        .category-item.active {
+            color: #2874F0;
+            border-bottom-color: #2874F0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 15px 30px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #F1F3F6;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #212121;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .product-card {
+            background: white;
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateY(-3px);
+        }
+
+        .product-img-box {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            background: #F8F8F8;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .discount-label {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: #F44336;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 2px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .wishlist {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .product-details {
+            padding: 12px;
+        }
+
+        .brand {
+            color: #878787;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .product-title {
+            color: #212121;
+            font-size: 14px;
+            font-weight: 500;
+            margin: 5px 0;
+            height: 40px;
+            overflow: hidden;
+        }
+
+        .rating-box {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin: 6px 0;
+        }
+
+        .rating {
+            background: #388E3C;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 2px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .reviews {
+            color: #878787;
+            font-size: 11px;
+        }
+
+        .price-box {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin: 8px 0;
+        }
+
+        .price {
+            color: #212121;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .old-price {
+            color: #878787;
+            font-size: 13px;
+            text-decoration: line-through;
+        }
+
+        .off {
+            color: #388E3C;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .delivery {
+            color: #388E3C;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        /* Image-based Add to Cart Button */
+        .cart-btn-img {
+            width: 100%;
+            background: linear-gradient(to bottom, #FFD814, #FF9800);
+            border: 1px solid #C77E00;
+            padding: 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-weight: 700;
+            font-size: 13px;
+            color: #000;
+            margin-bottom: 6px;
+        }
+
+        .cart-btn-img:hover {
+            background: linear-gradient(to bottom, #FFE082, #FFB300);
+            transform: translateY(-1px);
+        }
+
+        .cart-icon-svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .buy-btn {
+            width: 100%;
+            background: #FF9800;
+            border: none;
+            padding: 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            color: white;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .qty-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, #2874F0, #1B5FBF);
+            border-radius: 3px;
+        }
+
+        .qty-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 10px 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .qty-num {
+            color: white;
+            font-weight: 700;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-box {
+            background: white;
+            border-radius: 4px;
+            max-width: 900px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            background: linear-gradient(to right, #2874F0, #1B5FBF);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .modal-close {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .toast {
+            position: fixed;
+            top: 70px;
+            right: 15px;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 3px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            z-index: 3000;
+            display: none;
+        }
+
+        .toast.show {
+            display: flex;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(400px); }
+            to { transform: translateX(0); }
+        }
+
+        .toast.success { border-left: 4px solid #388E3C; }
+        .toast.error { border-left: 4px solid #F44336; }
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #878787;
+        }
+
+        @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="toast" class="toast"></div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-box" style="max-width: 450px;">
+            <div class="modal-header">
+                <h3 id="authTitle">Login</h3>
+                <button class="modal-close" onclick="closeModal('loginModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div style="background: #E3F2FD; padding: 12px; margin-bottom: 15px; border-radius: 3px;">
+                    <strong>Demo:</strong> username: <code>demo</code> | password: <code>demo123</code>
+                </div>
+                <form onsubmit="handleAuth(event)">
+                    <div style="margin-bottom: 15px;">
+                        <input type="text" id="username" placeholder="Username" required style="width: 100%; padding: 10px; border: 1px solid #D0D0D0; border-radius: 3px;">
+                    </div>
+                    <div style="margin-bottom: 15px;">
+                        <input type="password" id="password" placeholder="Password" required style="width: 100%; padding: 10px; border: 1px solid #D0D0D0; border-radius: 3px;">
+                    </div>
+                    <div id="nameBox" style="margin-bottom: 15px; display: none;">
+                        <input type="text" id="name" placeholder="Full Name" style="width: 100%; padding: 10px; border: 1px solid #D0D0D0; border-radius: 3px;">
+                    </div>
+                    <button type="submit" id="authBtn" style="width: 100%; background: linear-gradient(to bottom, #FFD814, #FF9800); border: 1px solid #C77E00; padding: 12px; border-radius: 3px; font-weight: 700; cursor: pointer;">Login</button>
+                </form>
+                <div style="text-align: center; margin-top: 15px; padding-top: 15px; border-top: 1px solid #E0E0E0;">
+                    <a onclick="toggleAuth()" id="toggleLink" style="color: #2874F0; cursor: pointer; font-weight: 600;">New? Create account</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Shopping Cart</h3>
+                <button class="modal-close" onclick="closeModal('cartModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="cartBody"></div>
+        </div>
+    </div>
+
+    <!-- Orders Modal -->
+    <div id="ordersModal" class="modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>My Orders</h3>
+                <button class="modal-close" onclick="closeModal('ordersModal')">&times;</button>
+            </div>
+            <div class="modal-body" id="ordersBody"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="promo-banner">
+            🎉 GRAND SALE! Up to 80% OFF + Extra 10% Cashback! Shop Now! 🎉
+        </div>
+        <div class="header-main">
+            <div class="logo" onclick="reset()">🛒 MegaShop</div>
+            <div class="search-box">
+                <input type="text" id="search" class="search-input" placeholder="Search for products, brands and more">
+                <button class="search-btn" onclick="handleSearch()">Search</button>
+            </div>
+            <div class="nav-btns" id="navBtns"></div>
+        </div>
+        <nav class="category-bar" id="categoryBar"></nav>
+    </header>
+
+    <div class="container">
+        <!-- Flash Sale -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">⚡ Flash Sale - Limited Time!</div>
+            </div>
+            <div class="product-grid" id="flash"></div>
+        </div>
+
+        <!-- Best Sellers -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">🏆 Best Sellers</div>
+            </div>
+            <div class="product-grid" id="best"></div>
+        </div>
+
+        <!-- Electronics -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">📱 Electronics</div>
+            </div>
+            <div class="product-grid" id="electronics"></div>
+        </div>
+
+        <!-- Fashion -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">👕 Fashion & Apparel</div>
+            </div>
+            <div class="product-grid" id="fashion"></div>
+        </div>
+
+        <!-- Home -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">🏠 Home & Kitchen</div>
+            </div>
+            <div class="product-grid" id="home"></div>
+        </div>
+
+        <!-- Sports -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">⚽ Sports & Fitness</div>
+            </div>
+            <div class="product-grid" id="sports"></div>
+        </div>
+
+        <!-- All Products -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-title">🛍️ All Products</div>
+                <select id="sort" onchange="handleSort()" style="padding: 8px 15px; border: 1px solid #D0D0D0; border-radius: 3px;">
+                    <option value="featured">Featured</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="rating">Top Rated</option>
+                </select>
+            </div>
+            <div class="product-grid" id="all"></div>
+        </div>
+    </div>
+
+    <script>
+        const DB = {
+            users: [{ id: 'u1', username: 'demo', password: 'demo123', name: 'Demo User', token: null }],
+            products: [
+                { id: 'p1', name: 'Apple MacBook Pro 16" M3 Pro', brand: 'Apple', price: 2499, original: 2999, rating: 4.9, reviews: 3421, img: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=300', cat: 'Electronics', flash: true },
+                { id: 'p2', name: 'iPhone 15 Pro Max 256GB Titanium', brand: 'Apple', price: 1199, original: 1399, rating: 4.8, reviews: 8234, img: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=300', cat: 'Electronics', flash: true },
+                { id: 'p3', name: 'Sony WH-1000XM5 Noise Cancelling', brand: 'Sony', price: 399, original: 499, rating: 4.7, reviews: 5621, img: 'https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=300', cat: 'Electronics', flash: false },
+                { id: 'p4', name: 'Apple Watch Series 9 GPS 45mm', brand: 'Apple', price: 429, original: 529, rating: 4.6, reviews: 2892, img: 'https://images.unsplash.com/photo-1434494878577-86c23bcb06b9?w=300', cat: 'Electronics', flash: true },
+                { id: 'p5', name: 'iPad Pro 12.9" M2 128GB WiFi', brand: 'Apple', price: 1099, original: 1299, rating: 4.8, reviews: 3210, img: 'https://images.unsplash.com/photo-1585790050230-5dd28404f274?w=300', cat: 'Electronics', flash: false },
+                { id: 'p6', name: 'JBL Flip 6 Portable Bluetooth Speaker', brand: 'JBL', price: 129, original: 169, rating: 4.5, reviews: 6745, img: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=300', cat: 'Electronics', flash: true },
+                { id: 'p7', name: 'Canon EOS R6 Mark II Mirrorless', brand: 'Canon', price: 2499, original: 2899, rating: 4.9, reviews: 1234, img: 'https://images.unsplash.com/photo-1606980624967-b519a36d17db?w=300', cat: 'Electronics', flash: false },
+                { id: 'p8', name: 'PlayStation 5 Console Digital Edition', brand: 'Sony', price: 499, original: 599, rating: 4.8, reviews: 12450, img: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=300', cat: 'Electronics', flash: true },
+                { id: 'p9', name: 'Samsung 55" QLED 4K Smart TV', brand: 'Samsung', price: 899, original: 1299, rating: 4.7, reviews: 2345, img: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=300', cat: 'Electronics', flash: false },
+                { id: 'p10', name: 'Dell XPS 13 Plus Laptop Intel i7', brand: 'Dell', price: 1299, original: 1599, rating: 4.6, reviews: 2876, img: 'https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=300', cat: 'Electronics', flash: false },
+                { id: 'p11', name: 'Bose QuietComfort Earbuds II', brand: 'Bose', price: 299, original: 379, rating: 4.8, reviews: 4532, img: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=300', cat: 'Electronics', flash: true },
+                { id: 'p12', name: 'Samsung Galaxy S24 Ultra 5G 256GB', brand: 'Samsung', price: 1299, original: 1499, rating: 4.9, reviews: 6789, img: 'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=300', cat: 'Electronics', flash: false },
+                { id: 'p13', name: 'GoPro HERO 12 Black Action Camera', brand: 'GoPro', price: 399, original: 499, rating: 4.7, reviews: 3421, img: 'https://images.unsplash.com/photo-1519183071298-a2962feb14f4?w=300', cat: 'Electronics', flash: true },
+                { id: 'p14', name: 'Logitech MX Master 3S Wireless Mouse', brand: 'Logitech', price: 99, original: 129, rating: 4.9, reviews: 6543, img: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=300', cat: 'Electronics', flash: false },
+                { id: 'p15', name: 'Kindle Paperwhite E-Reader 16GB', brand: 'Amazon', price: 139, original: 179, rating: 4.6, reviews: 8923, img: 'https://images.unsplash.com/photo-1592496001020-d31bd830651f?w=300', cat: 'Electronics', flash: true },
+                { id: 'p16', name: 'Nike Air Max Plus Triple Black', brand: 'Nike', price: 189, original: 239, rating: 4.7, reviews: 5432, img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300', cat: 'Fashion', flash: false },
+                { id: 'p17', name: 'Adidas Ultraboost 22 Running Shoes', brand: 'Adidas', price: 179, original: 229, rating: 4.8, reviews: 4521, img: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=300', cat: 'Fashion', flash: true },
+                { id: 'p18', name: 'Levi\'s 501 Original Fit Jeans Blue', brand: 'Levi\'s', price: 69, original: 98, rating: 4.6, reviews: 7234, img: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=300', cat: 'Fashion', flash: false },
+                { id: 'p19', name: 'Ray-Ban Aviator Classic Sunglasses', brand: 'Ray-Ban', price: 159, original: 199, rating: 4.9, reviews: 3421, img: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=300', cat: 'Fashion', flash: true },
+                { id: 'p20', name: 'North Face Waterproof Rain Jacket', brand: 'North Face', price: 249, original: 329, rating: 4.7, reviews: 2876, img: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=300', cat: 'Fashion', flash: false },
+                { id: 'p21', name: 'Tommy Hilfiger Classic Polo Shirt', brand: 'Tommy', price: 59, original: 89, rating: 4.5, reviews: 4123, img: 'https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?w=300', cat: 'Fashion', flash: true },
+                { id: 'p22', name: 'Calvin Klein Underwear Pack of 3', brand: 'Calvin Klein', price: 42, original: 60, rating: 4.8, reviews: 5234, img: 'https://images.unsplash.com/photo-1603252109303-2751441dd157?w=300', cat: 'Fashion', flash: false },
+                { id: 'p23', name: 'Timberland Premium 6-Inch Work Boots', brand: 'Timberland', price: 189, original: 249, rating: 4.9, reviews: 3654, img: 'https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=300', cat: 'Fashion', flash: true },
+                { id: 'p24', name: 'Puma Training Tracksuit Black Set', brand: 'Puma', price: 89, original: 129, rating: 4.6, reviews: 2987, img: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=300', cat: 'Fashion', flash: false },
+                { id: 'p25', name: 'Fossil Gen 6 Smartwatch Leather', brand: 'Fossil', price: 149, original: 199, rating: 4.7, reviews: 3421, img: 'https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=300', cat: 'Fashion', flash: true },
+                { id: 'p26', name: 'Dyson V15 Detect Cordless Vacuum', brand: 'Dyson', price: 649, original: 799, rating: 4.8, reviews: 2156, img: 'https://images.unsplash.com/photo-1558317374-067fb5f30001?w=300', cat: 'Home', flash: false },
+                { id: 'p27', name: 'Ninja Air Fryer 5.5Qt Digital', brand: 'Ninja', price: 129, original: 169, rating: 4.8, reviews: 7821, img: 'https://images.unsplash.com/photo-1585237672875-782371f6f0c7?w=300', cat: 'Home', flash: true },
+                { id: 'p28', name: 'KitchenAid Stand Mixer Artisan 5Qt', brand: 'KitchenAid', price: 379, original: 449, rating: 4.9, reviews: 5432, img: 'https://images.unsplash.com/photo-1578991624414-276ef23a534f?w=300', cat: 'Home', flash: false },
+                { id: 'p29', name: 'Nespresso Vertuo Coffee Maker', brand: 'Nespresso', price: 199, original: 279, rating: 4.7, reviews: 4321, img: 'https://images.unsplash.com/photo-1556911220-bff31c812dba?w=300', cat: 'Home', flash: true },
+                { id: 'p30', name: 'iRobot Roomba Robot Vacuum WiFi', brand: 'iRobot', price: 349, original: 449, rating: 4.6, reviews: 3876, img: 'https://images.unsplash.com/photo-1558317374-067fb5f30001?w=300', cat: 'Home', flash: false },
+                { id: 'p31', name: 'Instant Pot Duo 7-in-1 Pressure Cooker', brand: 'Instant Pot', price: 89, original: 129, rating: 4.8, reviews: 9234, img: 'https://images.unsplash.com/photo-1585237672875-782371f6f0c7?w=300', cat: 'Home', flash: true },
+                { id: 'p32', name: 'Philips Air Purifier 3000 Series', brand: 'Philips', price: 249, original: 329, rating: 4.7, reviews: 2654, img: 'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=300', cat: 'Home', flash: false },
+                { id: 'p33', name: 'Cuisinart Smart Stick Hand Blender', brand: 'Cuisinart', price: 79, original: 119, rating: 4.6, reviews: 3421, img: 'https://images.unsplash.com/photo-1585515320310-259814833e62?w=300', cat: 'Home', flash: true },
+                { id: 'p34', name: 'Tefal Non-Stick Cookware Set 10-Piece', brand: 'Tefal', price: 119, original: 169, rating: 4.8, reviews: 4532, img: 'https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=300', cat: 'Home', flash: false },
+                { id: 'p35', name: 'OXO Good Grips Kitchen Utensil Set', brand: 'OXO', price: 49, original: 69, rating: 4.7, reviews: 5234, img: 'https://images.unsplash.com/photo-1556911220-bff31c812dba?w=300', cat: 'Home', flash: true },
+                { id: 'p36', name: 'Anker PowerCore 20000mAh Battery', brand: 'Anker', price: 49, original: 69, rating: 4.7, reviews: 12340, img: 'https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=300', cat: 'Electronics', flash: true },
+                { id: 'p37', name: 'Fitbit Charge 6 Fitness Tracker', brand: 'Fitbit', price: 159, original: 199, rating: 4.5, reviews: 4210, img: 'https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=300', cat: 'Sports', flash: false },
+                { id: 'p38', name: 'Razer BlackWidow V4 Gaming Keyboard', brand: 'Razer', price: 139, original: 179, rating: 4.8, reviews: 3654, img: 'https://images.unsplash.com/photo-1595225476474-87563907a212?w=300', cat: 'Electronics', flash: true },
+                { id: 'p39', name: 'Seagate 2TB External Hard Drive USB', brand: 'Seagate', price: 79, original: 109, rating: 4.6, reviews: 5432, img: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=300', cat: 'Electronics', flash: false },
+                { id: 'p40', name: 'Logitech C920 HD Pro Webcam 1080p', brand: 'Logitech', price: 69, original: 99, rating: 4.7, reviews: 4321, img: 'https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=300', cat: 'Electronics', flash: true },
+                { id: 'p41', name: 'SanDisk 256GB Ultra USB 3.0 Flash', brand: 'SanDisk', price: 29, original: 45, rating: 4.8, reviews: 7654, img: 'https://images.unsplash.com/photo-1624823183493-ed5832f48f18?w=300', cat: 'Electronics', flash: false },
+                { id: 'p42', name: 'Amazon Echo Dot 5th Gen Smart Speaker', brand: 'Amazon', price: 49, original: 69, rating: 4.6, reviews: 8765, img: 'https://images.unsplash.com/photo-1589492477829-5e65395b66cc?w=300', cat: 'Electronics', flash: true },
+                { id: 'p43', name: 'TP-Link AC1750 Smart WiFi Router', brand: 'TP-Link', price: 79, original: 119, rating: 4.7, reviews: 3421, img: 'https://images.unsplash.com/photo-1606904825846-647eb07f5be2?w=300', cat: 'Electronics', flash: false },
+                { id: 'p44', name: 'Belkin USB-C Hub 7-in-1 Multiport', brand: 'Belkin', price: 59, original: 89, rating: 4.5, reviews: 2876, img: 'https://images.unsplash.com/photo-1625948515291-69613efd103f?w=300', cat: 'Electronics', flash: true },
+                { id: 'p45', name: 'Philips Hue White Smart Bulb 4-Pack', brand: 'Philips', price: 99, original: 139, rating: 4.8, reviews: 4532, img: 'https://images.unsplash.com/photo-1550985616-10810253b84d?w=300', cat: 'Home', flash: false },
+                { id: 'p46', name: 'Under Armour Charged Running Shoes', brand: 'Under Armour', price: 119, original: 159, rating: 4.6, reviews: 3210, img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300', cat: 'Sports', flash: true },
+                { id: 'p47', name: 'Yoga Mat Premium Non-Slip 6mm', brand: 'Manduka', price: 79, original: 109, rating: 4.9, reviews: 5432, img: 'https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=300', cat: 'Sports', flash: false },
+                { id: 'p48', name: 'Dumbbells Adjustable Weight Set 50lbs', brand: 'Bowflex', price: 299, original: 399, rating: 4.8, reviews: 2876, img: 'https://images.unsplash.com/photo-1623874228601-f4193c7b1818?w=300', cat: 'Sports', flash: true },
+                { id: 'p49', name: 'Treadmill Foldable Electric 3.0HP', brand: 'ProForm', price: 799, original: 999, rating: 4.7, reviews: 1543, img: 'https://images.unsplash.com/photo-1576678927484-cc907957088c?w=300', cat: 'Sports', flash: false },
+                { id: 'p50', name: 'Resistance Bands Set with Handles', brand: 'TheraBand', price: 39, original: 59, rating: 4.6, reviews: 6543, img: 'https://images.unsplash.com/photo-1598289431512-b97b0917affc?w=300', cat: 'Sports', flash: true },
+                { id: 'p51', name: 'Hydro Flask Water Bottle 32oz', brand: 'Hydro Flask', price: 44, original: 59, rating: 4.9, reviews: 8234, img: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=300', cat: 'Sports', flash: false },
+                { id: 'p52', name: 'Protein Powder Whey Isolate 5lbs', brand: 'Optimum', price: 59, original: 79, rating: 4.8, reviews: 7654, img: 'https://images.unsplash.com/photo-1579722821273-0f6c7d44362f?w=300', cat: 'Sports', flash: true },
+                { id: 'p53', name: 'Boxing Gloves Professional 16oz', brand: 'Everlast', price: 89, original: 129, rating: 4.7, reviews: 2345, img: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=300', cat: 'Sports', flash: false },
+                { id: 'p54', name: 'Bicycle Helmet MIPS Safety Certified', brand: 'Giro', price: 79, original: 109, rating: 4.8, reviews: 3421, img: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=300', cat: 'Sports', flash: true },
+                { id: 'p55', name: 'Tennis Racket Carbon Fiber Pro', brand: 'Wilson', price: 199, original: 279, rating: 4.9, reviews: 1876, img: 'https://images.unsplash.com/photo-1622163642998-1ea32b0bbc67?w=300', cat: 'Sports', flash: false },
+                { id: 'p56', name: 'Basketball Official Size 7 Indoor', brand: 'Spalding', price: 49, original: 69, rating: 4.7, reviews: 5234, img: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=300', cat: 'Sports', flash: true },
+                { id: 'p57', name: 'Soccer Ball FIFA Quality Pro Match', brand: 'Adidas', price: 89, original: 119, rating: 4.8, reviews: 4321, img: 'https://images.unsplash.com/photo-1614632537423-1e6c2e7e0aac?w=300', cat: 'Sports', flash: false },
+                { id: 'p58', name: 'Golf Club Set Complete 12-Piece', brand: 'Callaway', price: 599, original: 799, rating: 4.9, reviews: 987, img: 'https://images.unsplash.com/photo-1535131749006-b7f58c99034b?w=300', cat: 'Sports', flash: true },
+                { id: 'p59', name: 'Camping Tent 4-Person Waterproof', brand: 'Coleman', price: 149, original: 199, rating: 4.6, reviews: 3654, img: 'https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?w=300', cat: 'Sports', flash: false },
+                { id: 'p60', name: 'Backpack Hiking 50L Waterproof', brand: 'Osprey', price: 179, original: 229, rating: 4.8, reviews: 2987, img: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300', cat: 'Sports', flash: true }
+            ],
+            categories: ['All', 'Electronics', 'Fashion', 'Home', 'Sports'],
+            carts: {},
+            orders: {}
+        };
+
+        let state = {
+            user: null,
+            cart: [],
+            category: 'All',
+            query: '',
+            sort: 'featured',
+            isLogin: true
+        };
+
+        function toast(msg, type = 'success') {
+            const t = document.getElementById('toast');
+            t.className = 'toast show ' + type;
+            t.textContent = (type === 'success' ? '✓ ' : '✗ ') + msg;
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.add('show');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('show');
+        }
+
+        window.onclick = (e) => {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.remove('show');
+            }
+        };
+
+        function renderNav() {
+            const count = state.cart.reduce((sum, item) => sum + item.qty, 0);
+            const btns = document.getElementById('navBtns');
+            
+            if (state.user) {
+                btns.innerHTML = `
+                    <button class="nav-btn" onclick="openModal('ordersModal'); renderOrders()">Orders</button>
+                    <button class="nav-btn" onclick="openModal('cartModal'); renderCart()">
+                        Cart
+                        ${count > 0 ? `<span class="cart-badge">${count}</span>` : ''}
+                    </button>
+                    <button class="nav-btn">${state.user.name}</button>
+                    <button class="nav-btn" onclick="logout()">Logout</button>
+                `;
+            } else {
+                btns.innerHTML = `<button class="nav-btn" onclick="openModal('loginModal')">Login</button>`;
+            }
+        }
+
+        function renderCategories() {
+            const bar = document.getElementById('categoryBar');
+            bar.innerHTML = DB.categories.map(cat => 
+                `<div class="category-item ${state.category === cat ? 'active' : ''}" onclick="filterCat('${cat}')">${cat}</div>`
+            ).join('');
+        }
+
+        function renderCard(p) {
+            const disc = Math.round(((p.original - p.price) / p.original) * 100);
+            const inCart = state.cart.find(item => item.pid === p.id);
+            
+            return `
+                <div class="product-card">
+                    <div class="product-img-box">
+                        <img src="${p.img}" class="product-img" alt="${p.name}" onerror="this.src='https://via.placeholder.com/300?text=Product'">
+                        ${disc > 0 ? `<div class="discount-label">${disc}% OFF</div>` : ''}
+                        <div class="wishlist">♡</div>
+                    </div>
+                    <div class="product-details">
+                        <div class="brand">${p.brand}</div>
+                        <div class="product-title">${p.name}</div>
+                        <div class="rating-box">
+                            <span class="rating">${p.rating} ★</span>
+                            <span class="reviews">(${p.reviews.toLocaleString()})</span>
+                        </div>
+                        <div class="price-box">
+                            <span class="price">$${p.price}</span>
+                            ${p.original > p.price ? `
+                                <span class="old-price">$${p.original}</span>
+                                <span class="off">${disc}% off</span>
+                            ` : ''}
+                        </div>
+                        <div class="delivery">FREE Delivery</div>
+                        ${state.user ? (
+                            inCart ? `
+                                <div class="qty-box">
+                                    <button class="qty-btn" onclick="updateQty('${p.id}', ${inCart.qty - 1})">−</button>
+                                    <span class="qty-num">${inCart.qty}</span>
+                                    <button class="qty-btn" onclick="updateQty('${p.id}', ${inCart.qty + 1})">+</button>
+                                </div>
+                            ` : `
+                                <button class="cart-btn-img" onclick="addCart('${p.id}')">
+                                    <svg class="cart-icon-svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3z"/>
+                                    </svg>
+                                    ADD TO CART
+                                </button>
+                                <button class="buy-btn" onclick="addCart('${p.id}'); setTimeout(() => { openModal('cartModal'); renderCart(); }, 400);">BUY NOW</button>
+                            `
+                        ) : `
+                            <button class="cart-btn-img" onclick="openModal('loginModal')">LOGIN TO BUY</button>
+                        `}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderProducts() {
+            let prods = [...DB.products];
+            
+            if (state.category !== 'All') {
+                prods = prods.filter(p => p.cat === state.category);
+            }
+            
+            if (state.query) {
+                const q = state.query.toLowerCase();
+                prods = prods.filter(p => 
+                    p.name.toLowerCase().includes(q) ||
+                    p.brand.toLowerCase().includes(q)
+                );
+            }
+            
+            switch(state.sort) {
+                case 'price-low': prods.sort((a, b) => a.price - b.price); break;
+                case 'price-high': prods.sort((a, b) => b.price - a.price); break;
+                case 'rating': prods.sort((a, b) => b.rating - a.rating); break;
+            }
+            
+            // Flash
+            const flash = DB.products.filter(p => p.flash).slice(0, 8);
+            document.getElementById('flash').innerHTML = flash.map(renderCard).join('');
+            
+            // Best
+            const best = DB.products.sort((a, b) => b.reviews - a.reviews).slice(0, 8);
+            document.getElementById('best').innerHTML = best.map(renderCard).join('');
+            
+            // Electronics
+            const elec = DB.products.filter(p => p.cat === 'Electronics').slice(0, 8);
+            document.getElementById('electronics').innerHTML = elec.map(renderCard).join('');
+            
+            // Fashion
+            const fash = DB.products.filter(p => p.cat === 'Fashion').slice(0, 8);
+            document.getElementById('fashion').innerHTML = fash.map(renderCard).join('');
+            
+            // Home
+            const home = DB.products.filter(p => p.cat === 'Home').slice(0, 8);
+            document.getElementById('home').innerHTML = home.map(renderCard).join('');
+            
+            // Sports
+            const sports = DB.products.filter(p => p.cat === 'Sports').slice(0, 8);
+            document.getElementById('sports').innerHTML = sports.map(renderCard).join('');
+            
+            // All
+            document.getElementById('all').innerHTML = prods.length > 0 
+                ? prods.map(renderCard).join('')
+                : '<div class="empty">No products found</div>';
+        }
+
+        function renderCart() {
+            const body = document.getElementById('cartBody');
+            
+            if (state.cart.length === 0) {
+                body.innerHTML = '<div class="empty">Your cart is empty</div>';
+                return;
+            }
+            
+            let total = 0;
+            const items = state.cart.map(item => {
+                const p = DB.products.find(x => x.id === item.pid);
+                const sub = p.price * item.qty;
+                total += sub;
+                
+                return `
+                    <div style="display: flex; gap: 15px; padding: 15px; border-bottom: 1px solid #E0E0E0;">
+                        <img src="${p.img}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 4px;" onerror="this.src='https://via.placeholder.com/80'">
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; margin-bottom: 6px;">${p.name}</div>
+                            <div style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">$${p.price} × ${item.qty} = $${sub}</div>
+                            <div class="qty-box" style="max-width: 130px;">
+                                <button class="qty-btn" onclick="updateQty('${p.id}', ${item.qty - 1}); renderCart();">−</button>
+                                <span class="qty-num">${item.qty}</span>
+                                <button class="qty-btn" onclick="updateQty('${p.id}', ${item.qty + 1}); renderCart();">+</button>
+                            </div>
+                            <button onclick="updateQty('${p.id}', 0); renderCart();" style="color: #F44336; background: none; border: none; cursor: pointer; margin-top: 6px; text-decoration: underline;">Remove</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            body.innerHTML = `
+                ${items}
+                <div style="padding: 20px; background: #F8F8F8; margin-top: 15px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 20px; font-weight: 700;">
+                        <span>Total:</span>
+                        <span>$${total.toFixed(2)}</span>
+                    </div>
+                    <button onclick="checkout()" style="width: 100%; background: #FF9800; border: none; padding: 14px; border-radius: 3px; color: white; font-weight: 700; font-size: 16px; cursor: pointer;">PLACE ORDER</button>
+                </div>
+            `;
+        }
+
+        function renderOrders() {
+            const body = document.getElementById('ordersBody');
+            const orders = DB.orders[state.user.id] || [];
+            
+            if (orders.length === 0) {
+                body.innerHTML = '<div class="empty">No orders yet</div>';
+                return;
+            }
+            
+            body.innerHTML = orders.reverse().map(o => `
+                <div style="border: 1px solid #E0E0E0; border-radius: 4px; padding: 15px; margin-bottom: 12px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #E0E0E0;">
+                        <div>
+                            <div style="font-weight: 700;">Order #${o.id}</div>
+                            <div style="color: #878787; font-size: 12px; margin-top: 4px;">${o.date} ${o.time}</div>
+                        </div>
+                        <div style="background: #388E3C; color: white; padding: 4px 10px; border-radius: 3px; font-size: 12px; font-weight: 600; height: fit-content;">Confirmed</div>
+                    </div>
+                    ${o.items.map(i => `
+                        <div style="display: flex; justify-content: space-between; padding: 6px 0;">
+                            <span>${i.name} × ${i.qty}</span>
+                            <span>$${(i.price * i.qty).toFixed(2)}</span>
+                        </div>
+                    `).join('')}
+                    <div style="display: flex; justify-content: space-between; padding-top: 12px; border-top: 1px solid #E0E0E0; margin-top: 8px; font-size: 18px; font-weight: 700;">
+                        <span>Total:</span>
+                        <span>$${o.total.toFixed(2)}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleAuth() {
+            state.isLogin = !state.isLogin;
+            document.getElementById('authTitle').textContent = state.isLogin ? 'Login' : 'Create Account';
+            document.getElementById('authBtn').textContent = state.isLogin ? 'Login' : 'Create Account';
+            document.getElementById('toggleLink').textContent = state.isLogin ? 'New? Create account' : 'Have account? Login';
+            document.getElementById('nameBox').style.display = state.isLogin ? 'none' : 'block';
+        }
+
+        function handleAuth(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const name = document.getElementById('name').value.trim() || username;
+            
+            if (state.isLogin) {
+                const u = DB.users.find(x => x.username === username && x.password === password);
+                if (!u) {
+                    toast('Invalid credentials', 'error');
+                    return;
+                }
+                if (u.token) {
+                    toast('Already logged in elsewhere', 'error');
+                    return;
+                }
+                u.token = 'tok_' + Date.now();
+                state.user = u;
+                state.cart = DB.carts[u.id] || [];
+                closeModal('loginModal');
+                toast('Welcome ' + u.name);
+                renderApp();
+            } else {
+                if (DB.users.find(x => x.username === username)) {
+                    toast('Username exists', 'error');
+                    return;
+                }
+                DB.users.push({ id: 'u' + Date.now(), username, password, name, token: null });
+                toast('Account created! Please login');
+                state.isLogin = true;
+                toggleAuth();
+            }
+        }
+
+        function logout() {
+            if (state.user) {
+                const u = DB.users.find(x => x.id === state.user.id);
+                if (u) u.token = null;
+            }
+            state.user = null;
+            state.cart = [];
+            toast('Logged out');
+            renderApp();
+        }
+
+        function addCart(id) {
+            if (!state.user) {
+                openModal('loginModal');
+                return;
+            }
+            const existing = state.cart.find(item => item.pid === id);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                state.cart.push({ pid: id, qty: 1 });
+            }
+            DB.carts[state.user.id] = state.cart;
+            toast('Added to cart');
+            renderApp();
+        }
+
+        function updateQty(id, qty) {
+            if (qty <= 0) {
+                state.cart = state.cart.filter(item => item.pid !== id);
+                toast('Removed');
+            } else {
+                const item = state.cart.find(item => item.pid === id);
+                if (item) item.qty = qty;
+            }
+            DB.carts[state.user.id] = state.cart;
+            renderApp();
+        }
+
+        function checkout() {
+            if (state.cart.length === 0) {
+                toast('Cart is empty', 'error');
+                return;
+            }
+            
+            const oid = Date.now().toString().slice(-8);
+            let total = 0;
+            const items = state.cart.map(item => {
+                const p = DB.products.find(x => x.id === item.pid);
+                total += p.price * item.qty;
+                return { pid: p.id, name: p.name, price: p.price, qty: item.qty };
+            });
+            
+            if (!DB.orders[state.user.id]) DB.orders[state.user.id] = [];
+            DB.orders[state.user.id].push({
+                id: oid,
+                items,
+                total,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString()
+            });
+            
+            state.cart = [];
+            DB.carts[state.user.id] = [];
+            closeModal('cartModal');
+            toast('Order placed #' + oid);
+            setTimeout(() => {
+                openModal('ordersModal');
+                renderOrders();
+            }, 500);
+            renderApp();
+        }
+
+        function filterCat(cat) {
+            state.category = cat;
+            renderApp();
+        }
+
+        function handleSearch() {
+            state.query = document.getElementById('search').value;
+            renderApp();
+        }
+
+        function handleSort() {
+            state.sort = document.getElementById('sort').value;
+            renderProducts();
+        }
+
+        function reset() {
+            state.category = 'All';
+            state.query = '';
+            state.sort = 'featured';
+            document.getElementById('search').value = '';
+            document.getElementById('sort').value = 'featured';
+            renderApp();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderApp() {
+            renderNav();
+            renderCategories();
+            renderProducts();
+        }
+
+        renderApp();
+
+        document.getElementById('search').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleSearch();
+        });
+    </script>
+</body>
+</html>
